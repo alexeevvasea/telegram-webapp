@@ -1,7 +1,23 @@
-import WelcomePage from "./pages/WelcomePage";
+// src/App.jsx
+import { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import WelcomePage from "@/pages/WelcomePage";
+import DashboardPage from "@/pages/DashboardPage";
 
-function App() {
-  return <WelcomePage />;
+export default function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const onboardingComplete = localStorage.getItem("onboardingComplete");
+    if (onboardingComplete) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
+  return (
+    <Routes>
+      <Route path="/" element={<WelcomePage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
+    </Routes>
+  );
 }
-
-export default App;
